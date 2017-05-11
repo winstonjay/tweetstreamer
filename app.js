@@ -1,34 +1,48 @@
-require('dotenv').config({ silent: true });
 
+/* load dotenv and our configuration varibles */
+require('dotenv').config({ silent: true })
+
+/* Third party requirement */
 const express = require('express')
-const app = express()
 const http = require('http')
-const server = http.createServer(app)
 const Twit = require('twit')
-const io = require('socket.io').listen(server);
-const sanitizeHtml = require('sanitize-html');
+const sanitizeHtml = require('sanitize-html')
 
-const hostname = process.env.HostName
+/* local requirments */
+var filterTweets = require("./utils.js")
+
+
+/* init server / express */
+const app = express()
+const server = http.createServer(app)
+const io = require('socket.io').listen(server)
+
 
 app.use(function(req, res, next) {
-    res.setHeader("Content-Security-Policy", "default-src 'self' https://ajax.googleapis.com/ ws://" + hostname);
-    return next();
+  res.setHeader(
+    "Content-Security-Policy", 
+    "default-src 'self' https://ajax.googleapis.com/ wss://" + process.env.HostName
+  );
+  return next();
 });
 
+/* set static path that we wanna serve from 
+eg: serve from 'public' but render as '/static/ */
 app.use('/static', express.static('public'))
 
+
+/* process.env.PORT for heroku */
 server.listen(process.env.PORT || 3000);
-console.log('starting')
+console.log('starting server')
 
 
-var filterTweets = require("./utils.js");
-
-// routing
+/* normal express routing */
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-var watchList = ['idiot'];
+
+/* Twit set up with credentials */
 var Tweet = new Twit({
   consumer_key:         process.env.Consumer_Key,
   consumer_secret:      process.env.Consumer_Secret,
@@ -36,34 +50,37 @@ var Tweet = new Twit({
   access_token_secret:  process.env.Access_Token_Secret,
 });
 
+/* last tweet monitoring so we don't get massive repeats 
+ some how this kept happening even after blocking retweets */
 var lastTweet = "";
-io.sockets.on('connection', function (socket) {
-  // console.log('Connected');
 
+io.sockets.on('connection', function (socket) { /* this probs needs sorting */
 
+  /* init our twitter streamer */
   var stream = Tweet.stream('statuses/filter', { track: 'idiot', language: 'en' });
 
-  
+  /* listen to tweets as they come */
   stream.on('tweet', function (tweet) {
-    setTimeout(function () {
+
+    setTimeout(function () { 
+    /* this timeout function seems to do nothing, 
+    need to find another way to try and limit the 
+    flow of tweets */
       text = filterTweets(tweet.text);
-      if (text != false) {
+      /* tweet would return false if its a retweet */
+      if (text != false) { 
         if (text != lastTweet) {
           lastTweet = text;
           text = sanitizeHtml(text);
-          // console.log(text);
+          // console.log(text); /* when debugging/local uncomment */
+          /* send the tweets to the page */
           io.sockets.volatile.emit('streamer', text);
         }
       } 
-      // else {
-      //   console.log('filter tweet')
-      // }
     }, 500);
   });
 
-
   socket.on('disconnect', function () {
-    // clearTimeout(tweets);
     console.log('disconnect')
   });
 });
