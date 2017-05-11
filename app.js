@@ -10,7 +10,7 @@ const sanitizeHtml = require('sanitize-html');
 
 app.use('/static', express.static('public'))
 
-server.listen(8080);
+server.listen(process.env.PORT || 3000);
 console.log('starting')
 
 
