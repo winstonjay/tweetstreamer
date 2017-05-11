@@ -41,11 +41,9 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.error(function(err, req, res, next){
+app.error(function(err, req, res, next) {
     if (err instanceof NotFound) {
         res.sendFile(__dirname + '/404.html');
-    } else {
-        next(err);
     }
 });
 
