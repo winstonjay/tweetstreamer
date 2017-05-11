@@ -17,20 +17,20 @@ html {
 
 main {max-width: 522px; margin: auto; padding: 16px; display: flex; align-items: center; height: 100vh;}
 
-h1 { margin-bottom: 24px; }
-
 p {  margin-bottom: 24px; max-width: 522px; line-height: 24px; }
 
-em { color: #EEFF41; font-style: normal; background-color: #212121;}
+em { color: #EEFF41; font-style: normal; background-color: #212121; }
 
-header, footer { position: fixed; padding: 8px; background-color: #263238; z-index: 99;}
-
-header { top: 0; color: #E1BEE7; }
-
-footer { bottom: 0; color: #1DE9B6; }
-footer.left { left: 0; color: #9e9e9e;}
-footer.right { right: 0; }
+#tweetd em { text-decoration: none; color:#80D8FF; }
 
 strong { color: #1DE9B6;  background-color: #212121; }
 
-#tweetd em { text-decoration: none; color:#80D8FF; }
+header { top: 0; color: #E1BEE7; }
+
+header, footer { position: fixed; padding: 8px; background-color: #263238; z-index: 99;}
+
+footer { bottom: 0; color: #1DE9B6; }
+
+footer.left { left: 0; color: #9e9e9e; }
+
+footer.right { right: 0; }
