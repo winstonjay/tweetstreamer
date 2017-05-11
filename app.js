@@ -8,6 +8,13 @@ const Twit = require('twit')
 const io = require('socket.io').listen(server);
 const sanitizeHtml = require('sanitize-html');
 
+const hostname = process.env.HostName
+
+app.use(function(req, res, next) {
+    res.setHeader("Content-Security-Policy", "connect-src 'self' https://ajax.googleapis.com/ ws://" + hostname);
+    return next();
+});
+
 app.use('/static', express.static('public'))
 
 server.listen(process.env.PORT || 3000);
