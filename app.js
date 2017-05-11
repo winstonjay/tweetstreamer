@@ -44,7 +44,7 @@ io.sockets.on('connection', function (socket) {
         if (text != lastTweet) {
           lastTweet = text;
           text = sanitizeHtml(text);
-          console.log(text);
+          // console.log(text);
           io.sockets.volatile.emit('streamer', text);
         }
       } 
