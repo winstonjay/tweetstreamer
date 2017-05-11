@@ -12,9 +12,9 @@ $(document).ready(function(){
         var message = "";
         for (var i = 1; i < messages_recieved.length; i++) {
             if (messages_recieved[i] != "") {
-                message += '<p>' + messages_recieved[i] + '</p>';
+                message += '<p>' + messages_recieved[i]+ '</p>';
             }
         }
-        $('#tweetd').html(message);
+        $('#tweetd').html( sanitizeHtml(message) );
     });
 });

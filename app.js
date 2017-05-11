@@ -21,7 +21,7 @@ const io = require('socket.io').listen(server)
 app.use(function(req, res, next) {
   res.setHeader(
     "Content-Security-Policy", 
-    "default-src 'self' https://ajax.googleapis.com/ wss://" + process.env.HostName
+    "connect-src 'self' https://ajax.googleapis.com/ wss://" + process.env.HostName
   );
   return next();
 });
@@ -32,7 +32,7 @@ app.use('/static', express.static('public'))
 
 
 /* process.env.PORT for heroku */
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 8080);
 console.log('starting server')
 
 
