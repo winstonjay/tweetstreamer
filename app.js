@@ -11,7 +11,7 @@ const sanitizeHtml = require('sanitize-html');
 const hostname = process.env.HostName
 
 app.use(function(req, res, next) {
-    res.setHeader("Content-Security-Policy", "connect-src 'self' https://ajax.googleapis.com/ ws://" + hostname);
+    res.setHeader("Content-Security-Policy", "default-src 'self' https://ajax.googleapis.com/ ws://" + hostname);
     return next();
 });
 
