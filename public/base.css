@@ -15,7 +15,7 @@ html {
     background-color: #263238;
 }
 
-main {max-width: 522px;margin: auto;padding: 16px;display: flex;align-items: center;height: 100vh;}
+main {max-width: 522px; margin: auto; padding: 16px; display: flex; align-items: center; height: 100vh;}
 
 h1 { margin-bottom: 24px; }
 
@@ -28,7 +28,7 @@ header, footer { position: fixed; padding: 8px; background-color: #263238; z-ind
 header { top: 0; color: #E1BEE7; }
 
 footer { bottom: 0; color: #1DE9B6; }
-footer.left { left: 0; }
+footer.left { left: 0; color: #9e9e9e;}
 footer.right { right: 0; }
 
 strong { color: #1DE9B6;  background-color: #212121; }
