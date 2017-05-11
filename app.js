@@ -41,11 +41,12 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.error(function(err, req, res, next) {
-    if (err instanceof NotFound) {
-        res.sendFile(__dirname + '/404.html');
-    }
+// Handle 404 - Keep this as a last route
+app.use(function(req, res, next) {
+    res.status(400);
+    res.send('404: File Not Found');
 });
+
 
 /* Twit set up with credentials */
 var Tweet = new Twit({
