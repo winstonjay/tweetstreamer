@@ -1,4 +1,4 @@
-# Tweet Streamer Display
+# Tweet Streamer
 Web application that live monitors tweets that contain the term `'idiot'` through the sites streaming API. App uses a websocket server with a Node.js backend.
 
 ![Site demo](/demo.jpg)
