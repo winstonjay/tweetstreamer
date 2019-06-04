@@ -31,13 +31,13 @@ console.log('starting server')
 
 // normal express routing
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 // Handle 404 - Keep this as a last route
 app.use(function(req, res, next) {
     res.status(400);
-    res.sendFile(__dirname + '/404.html');
+    res.sendFile(__dirname + '/views/404.html');
 });
 
 
