@@ -1,20 +1,17 @@
-$(document).ready(function(){
-    /*connect to the socket server.*/
-    var socket = io();
-    var messages_recieved = [];
-    socket.on('streamer', function(tweet) {
+const socket = io();
+const tweets = document.querySelector('#tweetd');
+const idiot = /\b(idiot)\b/ig;
+const mention = /(@[\w\_]{1,15})/g;
 
-        if (messages_recieved.length >= 7){
-            messages_recieved.shift()
-        }        
-        messages_recieved.push(tweet);
-
-        var message = "";
-        for (var i = 1; i < messages_recieved.length; i++) {
-            if (messages_recieved[i] != "") {
-                message += '<p>' + messages_recieved[i]+ '</p>';
-            }
-        }
-        $('#tweetd').html( sanitizeHtml(message) );
-    });
+socket.on('streamer', function(tweet) {
+  let nodes = tweets.childNodes
+  if (nodes.length >= 4){
+    tweets.removeChild(nodes[0]);
+  }
+  let p = document.createElement('p');
+  p.textContent = tweet;
+  p.innerHTML = (p.innerHTML
+                  .replace(idiot, '<strong>$1</strong>')
+                  .replace(mention, '<em>$1</em>'));
+  tweets.appendChild(p);
 });
